@@ -1,0 +1,24 @@
+# Dependencies (reinstalled during build)
+node_modules
+
+# Build output
+.next
+
+# Dev / test files
+.git
+.gitignore
+.env
+.env.local
+.env*.local
+
+# Prisma dev database
+prisma/dev.db
+
+# Vercel
+.vercel
+
+# OS / editor
+.DS_Store
+*.log
+.vscode
+.idea

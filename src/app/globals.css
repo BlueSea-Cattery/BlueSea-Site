@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+@theme {
+  /* === Light Palette === */
+  --color-cream-50: #FFFFFF;
+  --color-cream-100: #FDFCFA;
+  --color-cream-200: #F8F7F4;
+  --color-cream-300: #F0EDE8;
+  --color-cream-400: #E4E0D9;
+  --color-cream-500: #D1CCC3;
+
+  /* === Sea Blue Accent (#336699 as sea-600) === */
+  --color-sea-50:  #EBF2F8;
+  --color-sea-100: #D0E3F0;
+  --color-sea-200: #A2C7E1;
+  --color-sea-300: #73AACC;
+  --color-sea-400: #4D8DB8;
+  --color-sea-500: #3A7AA8;
+  --color-sea-600: #336699;
+  --color-sea-700: #255280;
+  --color-sea-800: #183D66;
+  --color-sea-900: #0C294D;
+
+  /* === Text === */
+  --color-ink-50: #F8FAFC;
+  --color-ink-100: #F1F5F9;
+  --color-ink-200: #E2E8F0;
+  --color-ink-300: #CBD5E1;
+  --color-ink-400: #94A3B8;
+  --color-ink-500: #64748B;
+  --color-ink-600: #475569;
+  --color-ink-700: #334155;
+  --color-ink-800: #1E293B;
+  --color-ink-900: #0F172A;
+
+  /* === Warm Gold (premium feel) === */
+  --color-gold-400: #D4A853;
+  --color-gold-500: #C49A3C;
+  --color-gold-600: #A67E2E;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ========= Base Styles ========= */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream-200);
+  color: var(--color-ink-700);
+  overflow-x: hidden;
+}
+
+/* ========= Custom Scrollbar ========= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream-300);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-400);
+}
+
+/* ========= Typography ========= */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  color: var(--color-ink-800);
+}
+
+/* ========= Glass Morphism (light) ========= */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ========= Gradient Overlays ========= */
+.gradient-hero {
+  background: linear-gradient(180deg, transparent 0%, var(--color-cream-200) 100%);
+}
+
+.gradient-sea {
+  background: linear-gradient(135deg, var(--color-sea-600) 0%, var(--color-sea-800) 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold-400) 0%, var(--color-gold-600) 100%);
+}
+
+.text-gradient-sea {
+  background: linear-gradient(135deg, var(--color-sea-500) 0%, var(--color-sea-800) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold-400) 0%, var(--color-gold-500) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========= Animations ========= */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  /* #336699 = rgb(51, 102, 153) */
+  0%, 100% { box-shadow: 0 0 20px rgba(51, 102, 153, 0.08); }
+  50% { box-shadow: 0 0 40px rgba(51, 102, 153, 0.18); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* ========= Card Styles ========= */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(51, 102, 153, 0.08);
+}
+
+/* ========= Image Containers ========= */
+.img-container {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.img-container img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.img-container:hover img {
+  transform: scale(1.05);
+}
+
+/* ========= Divider ========= */
+.divider-sea {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-sea-500), var(--color-sea-700));
+  margin: 0 auto;
+}
+
+/* ========= Admin Styles ========= */
+.admin-card {
+  background: var(--color-cream-50);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* ========= Inputs (light) ========= */
+.input-light {
+  background: var(--color-cream-100);
+  border: 1px solid var(--color-cream-400);
+  color: var(--color-ink-800);
+}
+
+.input-light::placeholder {
+  color: var(--color-ink-400);
+}
+
+.input-light:focus {
+  border-color: var(--color-sea-500);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(51, 102, 153, 0.12);
+}
+
+/* ========= Selection ========= */
+::selection {
+  background: rgba(51, 102, 153, 0.18);
+  color: var(--color-ink-900);
+}

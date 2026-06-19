@@ -1,0 +1,105 @@
+generator client {
+  provider   = "prisma-client"
+  output     = "../src/generated/prisma"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+}
+
+model SiteContent {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
+
+model Cat {
+  id          String   @id @default(cuid())
+  name        String
+  title       String?
+  gender      String
+  color       String?
+  description String?
+  photoUrl    String?
+  photos      String[] @default([])
+  birthDate   String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  kittens     Kitten[]
+  // Litters where this cat is the mother
+  littersAsMother Litter[] @relation("LitterMother")
+  // Litters where this cat is the father
+  littersAsFather Litter[] @relation("LitterFather")
+}
+
+model Pedigree {
+  id        String   @id @default(cuid())
+  name      String
+  photoUrl  String
+  createdAt DateTime @default(now())
+  litters   Litter[]
+}
+
+model Litter {
+  id          String    @id @default(cuid())
+  name        String               // e.g. "Помёт А", "Помёт Б"
+  birthDate   String?              // date of birth
+  description String?              // optional notes
+  motherId    String?
+  mother      Cat?      @relation("LitterMother", fields: [motherId], references: [id], onDelete: SetNull)
+  fatherId    String?
+  father      Cat?      @relation("LitterFather", fields: [fatherId], references: [id], onDelete: SetNull)
+  pedigreeId  String?
+  pedigree    Pedigree? @relation(fields: [pedigreeId], references: [id], onDelete: SetNull)
+  isActive    Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  kittens     Kitten[]
+}
+
+model Kitten {
+  id          String   @id @default(cuid())
+  name        String
+  gender      String
+  color       String?
+  birthDate   String?
+  status      String   @default("available")
+  price       Float?
+  description String?
+  photoUrl    String?
+  photos      String[] @default([])
+  parentId    String?
+  parent      Cat?     @relation(fields: [parentId], references: [id], onDelete: SetNull)
+  litterId    String?
+  litter      Litter?  @relation(fields: [litterId], references: [id], onDelete: SetNull)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Achievement {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
