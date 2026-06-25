@@ -107,6 +107,29 @@ export default async function Footer() {
             Сделано с <Heart size={12} className="text-sea-500" /> для наших кошек
           </p>
         </div>
+
+        {/* Developer Credit */}
+        <div className="mt-4 pt-4 border-t border-black/5 flex flex-col sm:flex-row justify-center items-center gap-3 text-center">
+          <span className="text-ink-400 text-base">Сайт разработали</span>
+          <a
+            href="https://smrtmind.ru"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sea-600 hover:text-sea-700 text-base font-semibold underline underline-offset-2 transition-colors duration-300"
+          >
+            smrtmind.ru
+          </a>
+          <span className="hidden sm:inline text-ink-300 text-base">·</span>
+          <span className="text-ink-400 text-base">Связаться с нами:</span>
+          <a
+            href="https://t.me/ynot888"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-ink-500 hover:text-sea-600 text-base underline underline-offset-2 transition-colors duration-300"
+          >
+            t.me/ynot888
+          </a>
+        </div>
       </div>
     </footer>
   );

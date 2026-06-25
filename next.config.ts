@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: __dirname,
+  },
   images: {
     remotePatterns: [
       // Allow images from any HTTPS host (e.g. Yandex Object Storage, VK Cloud, MinIO behind nginx)
