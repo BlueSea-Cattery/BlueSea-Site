@@ -6,12 +6,33 @@ import { Send } from "lucide-react";
 export default function ContactForm() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
-    setFormData({ name: "", email: "", message: "" });
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        throw new Error("Ошибка при отправке сообщения");
+      }
+
+      setSent(true);
+      setTimeout(() => setSent(false), 3000);
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err: any) {
+      setError(err.message || "Произошла ошибка");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,12 +82,18 @@ export default function ContactForm() {
               placeholder="Ваше сообщение..."
             />
           </div>
+          {error && (
+            <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100">
+              {error}
+            </div>
+          )}
           <button
             type="submit"
-            className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 gradient-sea text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-sea-500/25 transition-all duration-300 text-sm uppercase tracking-wider"
+            disabled={loading}
+            className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 gradient-sea text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-sea-500/25 transition-all duration-300 text-sm uppercase tracking-wider disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Отправить
-            <Send size={16} />
+            {loading ? "Отправка..." : "Отправить"}
+            {!loading && <Send size={16} />}
           </button>
         </form>
       )}
